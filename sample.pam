@@ -1,0 +1,30 @@
+#%PAM-1.0
+[Flow1]
+Preprocess      Sufficient    pam/pre_process
+Clean1          required      pam/process_embedding input="realKey"
+Clean1          required      pam/clean_embedding vectors="all"
+Flux            required      pam/flux/crackopen
+Flux            requisite     pam/flux/crackopen retry=3, basic="Yes"
+Flux            required      pam/generate_alert
+Flux            optional      pam/alert_enrichment
+
+[Flow2]
+Preprocess      Required      pam/pre_process2
+Clean1          required      pam/process_embedding input="realKey"
+Clean1          required      pam/clean_embedding vectors="all"
+Flux            required      pam/flux/crackopen2
+
+[Flow2]                                                                                                                                                            Preprocess      Required      pam/pre_process3
+
+[[work1]]
+Sequence = [Flow2, Flow1]
+
+[[work2]]
+Parallel = [Flow1, Flow2]
+Sequence = [Flow3]
+
+[[work3]]
+Reduce=[Flow1, Flow3]
+
+[[work4]]
+Reduce[Flow1, Flow2] Abelian

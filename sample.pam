@@ -14,7 +14,8 @@ Clean1          required      pam/process_embedding input="realKey"
 Clean1          required      pam/clean_embedding vectors="all"
 Flux            required      pam/flux/crackopen2
 
-[Flow2]                                                                                                                                                            Preprocess      Required      pam/pre_process3
+[Flow2]
+Preprocess      Required      pam/pre_process3
 
 [[work1]]
 Sequence = [Flow2, Flow1]
